@@ -16,15 +16,15 @@ For using this your system must have java installed. After that simply compile T
 
 ##  Preview
 
-![Typing Tutor Home Window ](images/homewindow.png "Home Window")
+![Typing Tutor Home Window ](Images/homewindow.png "Home Window")
 
 ---
 
-![Typing Tutor Typing Window ](images/Typingwindow.png "Typing Window")
+![Typing Tutor Typing Window ](Images/Typingwindow.png "Typing Window")
 
 ---
 
-![Typing Tutor Result Window ](images/resultwindow.png "/Result Window")
+![Typing Tutor Result Window ](Images/resultwindow.png "/Result Window")
 
 ### Developers/Author
 - Himanshu Sharma - (himanshusharma2972@gmail.com) [BlareGroup](www.blaregroup.com)

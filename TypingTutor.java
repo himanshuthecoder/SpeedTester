@@ -4,7 +4,8 @@
 			Himanshu Sharma
 			himanshusharma2972@gmail.com
 			www.blaregroup.com
-
+	
+	
 
 	===============================================================
 				Typing Tutor - A Typing instructor
@@ -135,7 +136,7 @@ class TypingTutor extends JFrame implements ActionListener
 	//contructor of main class	
 	TypingTutor()
 	{
-		super("TypoMeter");			//setting title of JFrame
+		super("Typing Tutor");			//setting title of JFrame
 			
 		//config JFrame
 		setSize(1800,1000);
@@ -146,14 +147,20 @@ class TypingTutor extends JFrame implements ActionListener
 			
 		/********  config panels mainly used as a border or better look	*******/
 	
+		//Config Top Panel
 		TopPanel.setBackground(Color.BLUE);
-		RightPanel.setBackground(Color.BLUE);
-		LeftPanel.setBackground(Color.BLUE);
-		BottomPanel.setBackground(Color.BLUE);
-
 		TopPanel.setPreferredSize(new Dimension(50,50));
-		LeftPanel.setPreferredSize(new Dimension(50,50));
+		
+		//Config Right Panel
+		RightPanel.setBackground(Color.BLUE);
 		RightPanel.setPreferredSize(new Dimension(50,50));
+		
+		//Config Left Panel
+		LeftPanel.setBackground(Color.BLUE);
+		LeftPanel.setPreferredSize(new Dimension(50,50));
+		
+		//Config Bottom Panel
+		BottomPanel.setBackground(Color.BLUE);
 		BottomPanel.setPreferredSize(new Dimension(50,50));
 
 		header.setForeground(Color.white);
@@ -162,27 +169,25 @@ class TypingTutor extends JFrame implements ActionListener
 		footer.setForeground(Color.white);
 		footer.setFont(new Font("",Font.BOLD,30));		
 
-	
-		//initializing JFrame window by creating home window
-		setHomeWindow();		//this method will create home window
-
-
-		//config main panel
-		mainPanel.setBackground(new Color(31, 35, 64));
-		mainPanel.setBorder(new LineBorder(Color.YELLOW,10,true));	
-		
-		
-
+		//Adding header and footer to Top and Bottom Panel
 		TopPanel.add(header);
 		BottomPanel.add(footer);
-		
+	
+		//config main panel
+		mainPanel.setBackground(new Color(31, 35, 64));
+		mainPanel.setBorder(new LineBorder(Color.YELLOW,10,true));
+
 		//adding components to JFrame
 		add(mainPanel,BorderLayout.CENTER);
 		add(TopPanel,BorderLayout.NORTH);
 		add(BottomPanel,BorderLayout.SOUTH);
 		add(RightPanel,BorderLayout.EAST);
 		add(LeftPanel,BorderLayout.WEST);
-		
+
+		//initializing JFrame window by creating home window
+		setHomeWindow();		//this method will create home window
+
+	
 		setVisible(true);
 
 	}
@@ -197,6 +202,8 @@ class TypingTutor extends JFrame implements ActionListener
 		//settin up items of typing for user to choose in JList
 		String topicName[] = {"Good Company and Bad Company","Hundred Gold Coins & Birbal","Keep Your Dream","The Circle of Good Deed","The Needy King and a Sage","The Poor Man’s Wealth","Be Grateful"};
 		contentList = new JList<String>(topicName);					//Jlist created
+		
+		//Config Content List
 		contentList.setFixedCellWidth(1000);						//setting width of Jlist panel
 	 	contentList.setFixedCellHeight(60);							//setting height of each list item 
 	 	contentList.setFont(new Font("",Font.BOLD,26));				//setting  font style of list
@@ -207,7 +214,9 @@ class TypingTutor extends JFrame implements ActionListener
 	 	contentList.setSelectionBackground(new Color(238,149,113));	//setting selection background
 	 	
 	 	//adding scroll bar to Jlist
-	 	scrollcontentList= new JScrollPane(contentList);			
+	 	scrollcontentList= new JScrollPane(contentList);
+
+	 	
 	 	listPanel.add(scrollcontentList);
 		listPanel.setBackground(new Color(31, 35, 64));
 
@@ -216,18 +225,23 @@ class TypingTutor extends JFrame implements ActionListener
 	 	durationLabel.setForeground(Color.WHITE);
 		durationLabel.setFont(new Font("",Font.BOLD,50));
 
-		//setting  duration button commands
+		//Config TwoMinute button
 		twominute.setActionCommand("02:00");
-		twominute.setSelected(true);				//default option
-		fiveminute.setActionCommand("05:00");
-		tenminute.setActionCommand("10:00");
-		thirtyminute.setActionCommand("30:00");
-
-		//config duration buttons
 		twominute.setFont(new Font("",Font.BOLD,25));
+		twominute.setSelected(true);		//default option
+
+		//Config Five Minute Button
+		fiveminute.setActionCommand("05:00");
 		fiveminute.setFont(new Font("",Font.BOLD,25));
+		
+		//Config Ten Minute Button
+		tenminute.setActionCommand("10:00");
 		tenminute.setFont(new Font("",Font.BOLD,25));
-		thirtyminute.setFont(new Font("",Font.BOLD,25));	
+		
+		//Config Thirty minute Button
+		thirtyminute.setActionCommand("30:00");
+		thirtyminute.setFont(new Font("",Font.BOLD,25));
+
 
 		//adding all radio button in single button group
 		durationbuttongroup.add(twominute);
@@ -265,24 +279,28 @@ class TypingTutor extends JFrame implements ActionListener
 		DurationListPanel.setLayout(new BoxLayout(DurationListPanel,BoxLayout.Y_AXIS));
 		DurationListPanel.setPreferredSize(new Dimension(1500,350));
 
-		//adding components to content list panel
+		//adding components to Duration list panel
 		DurationListPanel.add(Box.createRigidArea(new Dimension(1200,5)));
 		DurationListPanel.add(durationLabel);
-		durationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		DurationListPanel.add(Box.createRigidArea(new Dimension(1000,20)));
 		DurationListPanel.add(twominute);
-		twominute.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		DurationListPanel.add(Box.createRigidArea(new Dimension(1000,20)));
 		DurationListPanel.add(fiveminute);
-		fiveminute.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		DurationListPanel.add(Box.createRigidArea(new Dimension(1000,20)));
 		DurationListPanel.add(tenminute);
-		tenminute.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
 		DurationListPanel.add(Box.createRigidArea(new Dimension(1000,20)));
 		DurationListPanel.add(thirtyminute);
-		thirtyminute.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 		
+		//Config Alignment of components on duration List Panel
+		durationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		twominute.setAlignmentX(Component.CENTER_ALIGNMENT);
+		fiveminute.setAlignmentX(Component.CENTER_ALIGNMENT);
+		tenminute.setAlignmentX(Component.CENTER_ALIGNMENT);
+		thirtyminute.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		//setting up main panel for home window
 		mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
@@ -294,6 +312,7 @@ class TypingTutor extends JFrame implements ActionListener
 		mainPanel.add(startTestButton);
 		mainPanel.add(Box.createRigidArea(new Dimension(0,30)));
 
+		//Config Alignment of components on main panel
 		ContentListPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		DurationListPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		startTestButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -343,7 +362,9 @@ class TypingTutor extends JFrame implements ActionListener
 		typingWindow.add(userTextscroll);
 		typingWindow.setBorder(new LineBorder(Color.GREEN,10,true));
 
-		
+		contentarea.setText(getContent());  //sending seleted content for type
+		contentarea.setCaretPosition(0);	//setting scroll bar to top
+		clock.setText(userTime);			//setting text on clock label
 		//setting up main panel
 		mainPanel.setLayout(new BorderLayout(10,10));
 		mainPanel.add(typingWindow,BorderLayout.CENTER);
@@ -415,8 +436,8 @@ class TypingTutor extends JFrame implements ActionListener
 		
 
 		//aliging of components
-		clock.setAlignmentX(Component.CENTER_ALIGNMENT);
 		timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		clock.setAlignmentX(Component.CENTER_ALIGNMENT);		
 		buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	
 		//adding listerers to buttons
@@ -617,10 +638,9 @@ class TypingTutor extends JFrame implements ActionListener
 				mainPanel.remove(startTestButton);
 
 				setTypingWindow();					//setting typing window
-				contentarea.setText(getContent());  //sending seleted content for type
-				contentarea.setCaretPosition(0);	//setting scroll bar to top
+				
 				setSidePanel();						//setting sidepanel
-				clock.setText(userTime);			//setting text on clock label
+				
 			}
 			else{
 				reloadTypingwindow();				//reaload typing after it appers ones
@@ -631,7 +651,7 @@ class TypingTutor extends JFrame implements ActionListener
 		}
 	}
 
-	//realodin home window
+	//realoding home window
 	public void reloadHomewindow()
 	{
 		mainPanel.remove(typingWindow);

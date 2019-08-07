@@ -11,8 +11,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.swing.border.*;
 import java.awt.FlowLayout;
+import java.util.List;
+import java.util.ArrayList;
 
-
+/*****		This class will create Home Window of TypingTutor	*****/
 class HomeWindowSection 
 {
 		//components and panels of home window
@@ -183,6 +185,7 @@ class HomeWindowSection
 	
 }
 
+/******	This class will create TypingWindow for TypingTutor	******/
 class TypingWindowSection 
 {	 
 		JPanel typingWindowPanel; 	//this panel will create or handle the typingwindow
@@ -346,6 +349,7 @@ class TypingWindowSection
 
 }
 
+/*****	This Class will create Result Window for TypingTutor 	****/
 class ResultWindowSection
 {	
 	
@@ -359,6 +363,7 @@ class ResultWindowSection
 		JButton resultToHomeButton;
 		JButton resultExitButton;
 		JPanel resultButtonPanel;
+		
 
 
 	//this method will create result window
@@ -373,6 +378,7 @@ class ResultWindowSection
 			resultToHomeButton = new JButton("   Home   ");
 			resultExitButton = new JButton("   Exit    ");
 			resultButtonPanel = new JPanel();
+
 
 			//	resultappear = 1;		//this will tell is this method runs ones or not 
 				
@@ -443,14 +449,231 @@ class ResultWindowSection
 	
 }
 
+
+
+/*
+    Class To Compare Two seperate String Array Words And Find Matching Words.
+*/
+class TextCmpAnalyser{
+
+    /* Internal Variables Used For Analysis */
+
+    private String Primary;        // For Primary Array Word
+    private String Secondary;      // For Secondary Array Word
+    
+    // Array Containers
+    private String[] PrimaryArray;
+    public String[] SecondaryArray;
+    
+    
+    public boolean debug = false; // Debug Conditions To Control Ouptput
+    
+    // Store Words
+    public List<String> JumpWords = new ArrayList<String>();
+    public List<String> MatchedWords = new ArrayList<String>();
+
+    public int primary_matched = 0;   // Matched Word Counter
+    private int sliding_motion = 1;    // Pointer Sliding Position Motion Record
+    private int secondary_sliding = 0; // Secondary Array Sliding Position Offset
+    private int primary_jump = 0;      // Primary Array Jump Offset
+    private int secondary_jump = 0;    // Secondary Array Jump Offset
+    private int counter = 0;           // Algorithm Run Cycle Counter
+    private int breaker = 0;           // Breaker Counter
+    public int breakerlimit = 2000;   // Emergency Cycle Run Processing Cutout
+    public int secondary_forward_range = 3; // Search Range
+    
+
+    //simple constructor
+    TextCmpAnalyser()
+    {
+
+    }
+    // Contructor With Array Argument
+    TextCmpAnalyser(String[] array_one, String[] array_two){
+    
+    
+        loadArray(array_one, array_two);
+    }
+    
+    // Contructor With String Argument
+    TextCmpAnalyser(String string_one, String string_two){
+        String[] tmp1 = string_one.split(" "); 
+        String[] tmp2 = string_two.split(" "); 
+    
+        loadArray(tmp1, tmp2);
+    }
+    
+    
+    public void loadArray(String[] array_one, String[] array_two){   
+    
+        if(array_one.length <= array_two.length){
+            
+            PrimaryArray = array_two;
+            SecondaryArray = array_one;
+        }
+        else{
+        
+            SecondaryArray = array_two;
+            PrimaryArray = array_one;
+        }
+        
+        if(debug){
+            System.out.println(String.format("Primary Array Length : %d Secondary Array Length : %d", PrimaryArray.length, SecondaryArray.length));
+        }
+        
+        processText();
+    }
+    
+    // Process Text
+    private void processText(){
+     
+        // Range Start
+        for(int pointer = 0; pointer< PrimaryArray.length; pointer++){
+        
+            breaker++;
+            
+            // Get Word From Primary
+            if( pointer + primary_jump < PrimaryArray.length ){
+
+                // Take Word 
+                Primary = PrimaryArray[ pointer + primary_jump];
+
+            }else{
+
+                Primary = "";
+                pointer += PrimaryArray.length;
+
+            }
+
+            // Get Word From Secondary Array 
+            if( pointer + secondary_sliding + secondary_jump < SecondaryArray.length ){
+
+                Secondary = SecondaryArray[ pointer + secondary_sliding + secondary_jump ];
+
+            }else{
+
+                Secondary = "";
+            }
+
+            if(debug){
+            
+                System.out.println(String.format(" >%s< cmp >%s<", Primary, Secondary));
+                
+            }
+            counter++;
+
+
+            // If Primary And Secondary Word Matched 
+            if( Primary.equals(Secondary)){
+
+                if(Primary!=""){
+                                primary_matched++;
+                                MatchedWords.add(Primary);
+
+                }
+
+                if(debug){
+
+                        System.out.println(String.format("Matched %s - %s, Sliding : %d, Primary Jump : %d, secondary Jump : %d , Motion %d,  I : %d", 
+                                                             Primary, 
+                                                             Secondary,
+                                                             secondary_sliding,
+                                                            primary_jump,
+                                                          secondary_jump,
+                                                            sliding_motion,
+                                                             pointer
+                                                            ));
+
+                }
+                secondary_jump += secondary_sliding;
+                secondary_sliding = 0;
+        
+                }
+                else{
+                    // If Word Not Matched Then, Sliding Routine Start 
+                    if( secondary_sliding < secondary_forward_range && sliding_motion == 1 ){
+                        secondary_sliding++;
+
+                    }else if( secondary_sliding >= secondary_forward_range && sliding_motion != 0){
+                        sliding_motion = 0;
+                        secondary_sliding = 0;
+
+                    }
+                    else{
+                        sliding_motion = 1;
+                        primary_jump++;
+                        JumpWords.add(Primary);
+                        
+                        if(debug){
+                        
+                            System.out.println(String.format("ELSE %s - %s, Sliding : %d, Jump : %d , Motion %d,  I : %d", 
+                                                             Primary, 
+                                                             Secondary,
+                                                             secondary_sliding,
+                                                            primary_jump,
+                                                            sliding_motion,
+                                                             pointer
+                                                            ));
+                        }
+                    }
+                   pointer--;       
+
+                }
+           if(breaker>breakerlimit){
+                    System.out.println("Emergency Break Cutout");
+                    break;
+
+                }
+        }
+    }
+        
+    public void fullreport(){
+    
+        // Call Report
+        report();
+        
+        System.out.println("[+] Un-matched words from primary array.");
+        
+        // Iterate All Items and Print 
+        for(String x:JumpWords){
+            System.out.println(x);
+        }
+
+
+        System.out.println("[+] matched words from primary array.");
+
+        // Iterate All Items And print 
+        for(String x:MatchedWords){
+            System.out.println(x);
+        }
+
+    }
+    
+    
+    // Print Useful Variable Report
+    public void report(){
+    
+        System.out.println(String.format("[+] Word Matched ................> %d", primary_matched));
+        System.out.println(String.format("[+] Cycle Counter ...............> %d", counter));
+        System.out.println(String.format("[+] Primary Jump ................> %d", primary_jump));
+        System.out.println(String.format("[+] Primary Array Length ........> %d", PrimaryArray.length));
+        System.out.println(String.format("[+] Secondary Array Length ......> %d", SecondaryArray.length));
+        System.out.println(String.format("[+] Search Around Range .........> %d", secondary_forward_range));
+    
+    }
+   
+
+}
+
 //main class
-class TypingTutor extends JFrame implements ActionListener
+class TypingTutor extends JFrame implements ActionListener, DocumentListener
 {
 	
 		//Declaring Objects of classes 
 		HomeWindowSection homeWindowObject; 
 		TypingWindowSection typingWindowObject;
 		ResultWindowSection resultWindowObject;
+		TextCmpAnalyser textAnalyserObj;
 
 
 		/*============ Declaring important variable ====================*/
@@ -483,19 +706,21 @@ class TypingTutor extends JFrame implements ActionListener
 		public	int getSecond;					//contains user selected second
 		public	String userTime="";				//contains user selected time
 
-			//important variables for calculating speed,accuracy and gross speed
+		//important variables for calculating speed,accuracy and gross speed
 		public	int speed=0;					//contains typing speed
 		public	int grossSpeed=0;				//contains gross speed
 		public	int accuracy=0;					//contains accuracy
 		public	int wrongWords=0;				//contains wrong word entered by user
 		
+		public boolean isTimerRunning = false;	//this will tell eighter timer is running or not 
+
 
 	/*==========	End of variable declaration ================*/
 
 	//contructor of main class	
 	TypingTutor()
 	{
-		super("TypoMeter");			//setting title of JFrame
+		super("TypingTutor");			//setting title of JFrame
 		
 		//config JFrame
 		setSize(1800,1000);
@@ -507,6 +732,7 @@ class TypingTutor extends JFrame implements ActionListener
 		homeWindowObject = new HomeWindowSection();
 		typingWindowObject = new TypingWindowSection(this.getHeight(),this.getWidth());  //this will pass the height & width of JFrame
 		resultWindowObject = new ResultWindowSection();
+		textAnalyserObj  = new TextCmpAnalyser();
 		
 		
 		/********  config panels mainly used as a border or better look	*******/
@@ -561,11 +787,40 @@ class TypingTutor extends JFrame implements ActionListener
 		typingWindowObject.homeButton.addActionListener(this);
 		resultWindowObject.resultToHomeButton.addActionListener(this);
 		resultWindowObject.resultExitButton.addActionListener(this);
+		typingWindowObject.userinputarea.getDocument().addDocumentListener(this);
 		
 	
 		setVisible(true);
 
 	}
+
+
+	//document listener (they are used to start the timer when user directly start typing without pressing start button)
+	public void changedUpdate(DocumentEvent documentEvent) {
+		// System.out.println("Document Change Update");
+			
+		};
+
+	public void removeUpdate(DocumentEvent documentEvent) {
+		// System.out.println("remove Update");
+			
+		};
+
+	public void insertUpdate(DocumentEvent documentEvent) {
+			
+			if(isTimerRunning == false)
+			{
+				typingWindowObject.startButton.doClick();
+				StartButtonStatus = 1;
+				
+			}
+			else
+			{
+
+			}
+			
+		};
+
 
 	//performinng action of each button
 	public void actionPerformed(ActionEvent e)
@@ -611,20 +866,23 @@ class TypingTutor extends JFrame implements ActionListener
 		else if(e.getSource()==typingWindowObject.startButton)
 		{
 			
-			if(StartButtonStatus==0)
+				if(StartButtonStatus==0)
 			    {	
 			    	getTimer(getMinute,getSecond);		//starting timer
 			    	typingWindowObject.startButton.setText("Re-Start");	//change text of startbutton to restart
 
 			    	StartButtonStatus=1;
+			    	isTimerRunning = true;
 			    }
 			    else{
 			    	countdown.stop();					//stoping timer
 			    	typingWindowObject.startButton.setText("Start");		//change text of startbutton to start
 			    	typingWindowObject.clock.setText(userTime);			//reload time
 			    	typingWindowObject.userinputarea.setText("");			//make Jtextarea empty
+			    	isTimerRunning = false;
 			    	StartButtonStatus=0;		
 			    }		
+			
 
 		}
 		else if(e.getSource()==typingWindowObject.exitButton)
@@ -682,9 +940,10 @@ class TypingTutor extends JFrame implements ActionListener
 						 		//setting result window on completing time
 						 		
 						 		mainPanel.remove(typingWindowObject.typingWindowPanel);
+						 		textAnalyserObj = new TextCmpAnalyser(typingWindowObject.userinputarea.getText(),typingWindowObject.contentarea.getText());
 						 		calculation(typingWindowObject.userinputarea,typingWindowObject.contentarea);
 						 		mainPanel.add(resultWindowObject.resultWindowPanel);
-
+						 		//textanalyser.fullreport();
 								revalidate();
 								repaint(); 
 
@@ -764,7 +1023,7 @@ class TypingTutor extends JFrame implements ActionListener
 			}
 
 			//calculating accuracy
-			accuracy = (((userwords.length-wrongWords)*100)/userwords.length);
+			accuracy = (((textAnalyserObj.primary_matched)*100)/textAnalyserObj.SecondaryArray.length);
 			if(accuracy<0){accuracy=0;}
 
 			//calculating gross speed

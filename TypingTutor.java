@@ -1023,7 +1023,7 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 			if(accuracy<0){accuracy=0;}
 
 			//calculating gross speed
-			grossSpeed = (userwords.length-wrongWords)/getMinute;
+			grossSpeed = (textAnalyserObj.primary_matched)/getMinute;
 
 			//setting up result in result window
 			resultWindowObject.grossTypingSpeed.setText("Gross Typing Speed = "+ grossSpeed);

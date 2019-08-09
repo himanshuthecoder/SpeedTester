@@ -15,10 +15,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 /*****		This class will create Home Window of TypingTutor	*****/
-class HomeWindowSection 
+class HomeWindowSection extends JPanel
 {
 		//components and panels of home window
-		JPanel homeWindowPanel;	//this panel will create or handle the homewindow
 		JPanel ContentListPanel;
 		JPanel listPanel;
 		JPanel DurationListPanel;
@@ -40,7 +39,6 @@ class HomeWindowSection
 		{	
 			
 			/* initializing components  */
-			homeWindowPanel = new JPanel();
 			ContentListPanel = new JPanel();
 			listPanel = new JPanel();
 			DurationListPanel = new JPanel();
@@ -166,19 +164,17 @@ class HomeWindowSection
 			DurationListPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 			startTestButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-			
-						
+				
 			//setting up main panel for home window
-			homeWindowPanel.setBackground(new Color(31, 35, 64));
-			homeWindowPanel.setLayout(new BoxLayout(homeWindowPanel,BoxLayout.Y_AXIS));
-			homeWindowPanel.add(Box.createRigidArea(new Dimension(0,5)));
-			homeWindowPanel.add(ContentListPanel);
-			homeWindowPanel.add(Box.createRigidArea(new Dimension(0,5)));
-			homeWindowPanel.add(DurationListPanel);
-			homeWindowPanel.add(Box.createRigidArea(new Dimension(100,5)));
-			homeWindowPanel.add(startTestButton);
-			homeWindowPanel.add(Box.createRigidArea(new Dimension(0,30)));
-						
+			setBackground(new Color(31, 35, 64));
+			setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+			add(Box.createRigidArea(new Dimension(0,5)));
+			add(ContentListPanel);
+			add(Box.createRigidArea(new Dimension(0,5)));
+			add(DurationListPanel);
+			add(Box.createRigidArea(new Dimension(100,5)));
+			add(startTestButton);
+			add(Box.createRigidArea(new Dimension(0,30)));
 			
 		}
 
@@ -186,9 +182,8 @@ class HomeWindowSection
 }
 
 /******	This class will create TypingWindow for TypingTutor	******/
-class TypingWindowSection 
+class TypingWindowSection extends JPanel
 {	 
-		JPanel typingWindowPanel; 	//this panel will create or handle the typingwindow
 		//components and panels of sidepanel in typing window
 		JPanel sidePanel;
 		JLabel timerLabel;
@@ -213,7 +208,7 @@ class TypingWindowSection
 	//this method will create Typing window for user 
 		public TypingWindowSection(int screenHeight,int screenWidth)
 		{	
-			typingWindowPanel = new JPanel();
+			//typingWindowPanel = new JPanel();
 			sidePanel = new JPanel();
 			timerLabel = new JLabel("Timer");
 			clock = new JLabel("05:00");
@@ -268,12 +263,12 @@ class TypingWindowSection
 
 			setSidePanel();
 			
+
 			//setting up main panel for TypingWindow 
-			typingWindowPanel.setBackground(new Color(31,35,64));
-			typingWindowPanel.setLayout(new BorderLayout(10,10));
-			typingWindowPanel.add(typingWindow,BorderLayout.CENTER);
-			typingWindowPanel.add(sidePanel,BorderLayout.EAST);
-			
+			setBackground(new Color(31,35,64));
+			setLayout(new BorderLayout(10,10));
+			add(typingWindow,BorderLayout.CENTER);
+			add(sidePanel,BorderLayout.EAST);
 			
 		}
 
@@ -350,11 +345,10 @@ class TypingWindowSection
 }
 
 /*****	This Class will create Result Window for TypingTutor 	****/
-class ResultWindowSection
+class ResultWindowSection extends JPanel
 {	
 	
 	//components and panels of result window
-		JPanel resultWindowPanel;		//this panel will create or handle the result window
 		JPanel resultPanel;
 		JLabel typingSpeed ;
 		JLabel accuracyLabel;
@@ -369,7 +363,7 @@ class ResultWindowSection
 	//this method will create result window
 		public ResultWindowSection()
 		{	
-			resultWindowPanel = new JPanel();
+			//resultWindowPanel = new JPanel();
 			resultPanel = new JPanel();
 			typingSpeed = new JLabel();
 			accuracyLabel = new JLabel();
@@ -437,12 +431,13 @@ class ResultWindowSection
 				resultButtonPanel.add(resultToHomeButton);
 				resultButtonPanel.add(resultExitButton);
 
-				//setting up main panel to result Panel
-				resultWindowPanel.setBackground(new Color(31,35,64));
-				resultWindowPanel.setLayout(new BorderLayout(10,10));
-				resultWindowPanel.add(resultPanel,BorderLayout.CENTER);
-				resultWindowPanel.add(resultButtonPanel,BorderLayout.SOUTH);
+				
 
+				//setting up main panel to result Panel
+				setBackground(new Color(31,35,64));
+				setLayout(new BorderLayout(10,10));
+				add(resultPanel,BorderLayout.CENTER);
+				add(resultButtonPanel,BorderLayout.SOUTH);
 				
 		}
 
@@ -768,7 +763,7 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 		mainPanel.setBorder(new LineBorder(Color.YELLOW,10,true));
 		mainPanel.setLayout(new BorderLayout());
 		 
-		mainPanel.add(homeWindowObject.homeWindowPanel,BorderLayout.CENTER);
+		mainPanel.add(homeWindowObject,BorderLayout.CENTER);
 	
 			
 
@@ -847,9 +842,9 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 
 			/*****loading typing window by removing home window******/
 
-			mainPanel.remove(homeWindowObject.homeWindowPanel);			
+			mainPanel.remove(homeWindowObject);			
 			
-			mainPanel.add(typingWindowObject.typingWindowPanel);
+			mainPanel.add(typingWindowObject);
 			
 			//initializing component at runtime
 			typingWindowObject.clock.setText(userTime);
@@ -893,8 +888,8 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 		{
 			countdown.stop();
 	    	
-			mainPanel.remove(typingWindowObject.typingWindowPanel);
-			mainPanel.add(homeWindowObject.homeWindowPanel); 
+			mainPanel.remove(typingWindowObject);
+			mainPanel.add(homeWindowObject); 
 			
 			revalidateJframe();
 		}
@@ -905,8 +900,8 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 		else if(e.getSource()==resultWindowObject.resultToHomeButton)
 		{	
 			//reload home window form result window
-			mainPanel.remove(resultWindowObject.resultWindowPanel);
-			mainPanel.add(homeWindowObject.homeWindowPanel);
+			mainPanel.remove(resultWindowObject);
+			mainPanel.add(homeWindowObject);
 
 			revalidateJframe();
 		
@@ -939,15 +934,16 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 						 	{	
 						 		//setting result window on completing time
 						 		
-						 		mainPanel.remove(typingWindowObject.typingWindowPanel);
+						 		mainPanel.remove(typingWindowObject);
 						 		textAnalyserObj = new TextCmpAnalyser(typingWindowObject.userinputarea.getText(),typingWindowObject.contentarea.getText());
 						 		calculation(typingWindowObject.userinputarea,typingWindowObject.contentarea);
-						 		mainPanel.add(resultWindowObject.resultWindowPanel);
+						 		mainPanel.add(resultWindowObject);
 						 		//textanalyser.fullreport();
 								revalidate();
 								repaint(); 
 
 						 		countdown.stop();	//timer stop
+						 		isTimerRunning=false;
 						 		
 							}
 						}

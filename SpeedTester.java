@@ -1,3 +1,14 @@
+/*###############################################################
+#		Program Name :- SpeedTester.java 						#
+#		Github:- himanshusharma2972								#
+#		Gmail:- himanshusharma2972								#
+#               												#
+#                  www.blaregroup.com							#
+#	About:- SpeedTester is Typing tool which helps to you to 	#
+#			check and increase your typing speed and accuracy.	#
+#																#
+#################################################################
+
 //importing modules
 import javax.swing.*;
 import javax.swing.event.*;

@@ -13,8 +13,8 @@ import javax.swing.border.*;
 import java.awt.FlowLayout;
 import java.util.List;
 import java.util.ArrayList;
-
-/*****		This class will create Home Window of TypingTutor	*****/
+import javax.swing.UIManager; 
+/*****		This class will create Home Window of SpeedTester	*****/
 class HomeWindowSection extends JPanel
 {
 		//components and panels of home window
@@ -181,7 +181,7 @@ class HomeWindowSection extends JPanel
 	
 }
 
-/******	This class will create TypingWindow for TypingTutor	******/
+/******	This class will create TypingWindow for SpeedTester	******/
 class TypingWindowSection extends JPanel
 {	 
 		//components and panels of sidepanel in typing window
@@ -193,6 +193,8 @@ class TypingWindowSection extends JPanel
 		JButton homeButton;
 		JButton resultButton;
 		JButton exitButton;
+		//JPanel liveSpeedPanel;
+		//JLabel liveSpeedLabel;
 
 		//components and panels of typing window
 		JPanel typingWindow ;
@@ -217,6 +219,8 @@ class TypingWindowSection extends JPanel
 			homeButton = new JButton("Home");
 			resultButton = new JButton("Result");
 			exitButton = new JButton("Exit");
+			//liveSpeedPanel = new JPanel();
+			//liveSpeedLabel = new JLabel();
 
 			//components and panels of typing window
 			typingWindow = new JPanel();
@@ -265,7 +269,7 @@ class TypingWindowSection extends JPanel
 			
 
 			//setting up main panel for TypingWindow 
-			setBackground(new Color(31,35,64));
+			setBackground(new Color(27,38,44));
 			setLayout(new BorderLayout(10,10));
 			add(typingWindow,BorderLayout.CENTER);
 			add(sidePanel,BorderLayout.EAST);
@@ -308,9 +312,9 @@ class TypingWindowSection extends JPanel
 			
 
 			//setting up position of buttons 
-			startButton.setBounds(70,10,250,60);
-			homeButton.setBounds(70,90,250,60);
-			exitButton.setBounds(70,170,250,60);
+			startButton.setBounds(70,100,250,60);
+			homeButton.setBounds(70,180,250,60);
+			exitButton.setBounds(70,260,250,60);
 
 			//sdding button to button panel
 			buttonPanel.add(startButton);
@@ -318,25 +322,38 @@ class TypingWindowSection extends JPanel
 			buttonPanel.add(exitButton);
 			buttonPanel.setBackground(Color.BLACK);
 
+			//setting up live Panel 
+			/*liveSpeedPanel.setPreferredSize(new Dimension(10,10));
+			liveSpeedPanel.setBackground(Color.YELLOW);
+			liveSpeedPanel.setLayout(null);
+			liveSpeedPanel.add(liveSpeedLabel);
+			//liveSpeedLabel.setBounds(30,100,200,40);
+			liveSpeedLabel.setFont(new Font("",Font.BOLD,45));
+			liveSpeedLabel.setText("Live Speed: 0");
+			liveSpeedLabel.setForeground(Color.YELLOW);*/
 
 			//config sidepanel 
 			sidePanel.setPreferredSize(new Dimension(400,300));
-			sidePanel.setBackground(Color.BLUE);
+			sidePanel.setBackground(new Color(27,38,44));
 			sidePanel.setLayout(new BoxLayout(sidePanel,BoxLayout.Y_AXIS));
 		
 			//adding components on sidepanel	
-			sidePanel.add(Box.createRigidArea(new Dimension(0,25)));
+			sidePanel.add(Box.createRigidArea(new Dimension(0,35)));
 			sidePanel.add(timerLabel);
-			sidePanel.add(Box.createRigidArea(new Dimension(0,25)));
+			sidePanel.add(Box.createRigidArea(new Dimension(0,35)));
 			sidePanel.add(clock);
-			sidePanel.add(Box.createRigidArea(new Dimension(00,65)));
+			sidePanel.add(Box.createRigidArea(new Dimension(50,65)));
 			sidePanel.add(buttonPanel);
+			//sidePanel.add(Box.createRigidArea(new Dimension(0,150)));
+			//sidePanel.add(liveSpeedLabel);
+			//sidePanel.add(Box.createRigidArea(new Dimension(20,20)));
 			
 
 			//aliging of components
 			timerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 			clock.setAlignmentX(Component.CENTER_ALIGNMENT);		
 			buttonPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+			//liveSpeedLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 	
 						
 		}
@@ -344,7 +361,7 @@ class TypingWindowSection extends JPanel
 
 }
 
-/*****	This Class will create Result Window for TypingTutor 	****/
+/*****	This Class will create Result Window for SpeedTester 	****/
 class ResultWindowSection extends JPanel
 {	
 	
@@ -416,6 +433,7 @@ class ResultWindowSection extends JPanel
 				resultPanel.add(Box.createRigidArea(new Dimension(0,20)));
 				resultPanel.add(typingSpeed);
 				resultPanel.add(Box.createRigidArea(new Dimension(0,20)));
+				
 
 
 				grossTypingSpeed.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -434,7 +452,7 @@ class ResultWindowSection extends JPanel
 				
 
 				//setting up main panel to result Panel
-				setBackground(new Color(31,35,64));
+				setBackground(new Color(27,38,44));
 				setLayout(new BorderLayout(10,10));
 				add(resultPanel,BorderLayout.CENTER);
 				add(resultButtonPanel,BorderLayout.SOUTH);
@@ -661,7 +679,7 @@ class TextCmpAnalyser{
 }
 
 //main class
-class TypingTutor extends JFrame implements ActionListener, DocumentListener
+class SpeedTester extends JFrame implements ActionListener, DocumentListener
 {
 	
 		//Declaring Objects of classes 
@@ -683,8 +701,8 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 		JPanel RightPanel = new JPanel();
 
 		//header and footer of panels
-		JLabel header = new JLabel("TYPING TUTOR");
-		JLabel footer = new JLabel("Check your Typing Speed");
+		JLabel header = new JLabel("Check Your Typing Speed");
+		JLabel footer = new JLabel("© 2019 BlareGroup ");
 		
 		//this is main panel which contains homeWindowPanel,TypingWindowPanel,resultWindowPanel 
 		JPanel mainPanel = new JPanel();
@@ -713,10 +731,16 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 	/*==========	End of variable declaration ================*/
 
 	//contructor of main class	
-	TypingTutor()
+	SpeedTester()
 	{
-		super("TypingTutor");			//setting title of JFrame
-		
+		super("SpeedTester");			//setting title of JFrame
+		 try { 
+  
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName()); 
+        } 
+        catch (Exception e) { 
+            System.out.println("Look and Feel not set"); 
+        } 
 		//config JFrame
 		setSize(1800,1000);
 		getContentPane().setBackground(Color.black);	 
@@ -733,19 +757,19 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 		/********  config panels mainly used as a border or better look	*******/
 	
 		//Config Top Panel
-		TopPanel.setBackground(Color.BLUE);
+		TopPanel.setBackground(new Color(15,76,117));
 		TopPanel.setPreferredSize(new Dimension(50,50));
 		
 		//Config Right Panel
-		RightPanel.setBackground(Color.BLUE);
+		RightPanel.setBackground(new Color(15,76,117));
 		RightPanel.setPreferredSize(new Dimension(50,50));
 		
 		//Config Left Panel
-		LeftPanel.setBackground(Color.BLUE);
+		LeftPanel.setBackground(new Color(15,76,117));
 		LeftPanel.setPreferredSize(new Dimension(50,50));
 		
 		//Config Bottom Panel
-		BottomPanel.setBackground(Color.BLUE);
+		BottomPanel.setBackground(new Color(15,76,117));
 		BottomPanel.setPreferredSize(new Dimension(50,50));
 
 		header.setForeground(Color.white);
@@ -759,11 +783,12 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 		BottomPanel.add(footer);
 	
 		//config main panel
-		mainPanel.setBackground(new Color(31, 35, 64));
-		mainPanel.setBorder(new LineBorder(Color.YELLOW,10,true));
+		mainPanel.setBackground(new Color(27,38,44));
+		mainPanel.setBorder(new LineBorder(new Color(187,225,250),10,true));
 		mainPanel.setLayout(new BorderLayout());
 		 
 		mainPanel.add(homeWindowObject,BorderLayout.CENTER);
+	
 	
 			
 
@@ -956,13 +981,15 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 					
 					if(second<10){stringSecond="0"+stringSecond;}
 					if(minute<10){stringMinute="0"+stringMinute;}
-					
+						
+					 //String liveSpeed = Integer.toString((typingWindowObject./((takeminute-minute)+(60-second))));
 
 					//change time of clock label
 					String timechange =String.format("%s:%s",stringMinute,stringSecond);
 							
 					
 					typingWindowObject.clock.setText(timechange);		//setting text of clock lable at each second
+					//typingWindowObject.liveSpeedLabel.setText(" Live Speed : "+liveSpeed);
 				}
 
 			});
@@ -1026,9 +1053,11 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 			grossSpeed = (textAnalyserObj.primary_matched)/getMinute;
 
 			//setting up result in result window
+			resultWindowObject.typingSpeed.setText("Typing Speed = " + speed);
 			resultWindowObject.grossTypingSpeed.setText("Gross Typing Speed = "+ grossSpeed);
 			resultWindowObject.accuracyLabel.setText("Accuracy = " + accuracy + "%");
-			resultWindowObject.typingSpeed.setText("Typing Speed = " + speed);
+			
+			
 
 		}
 
@@ -1043,7 +1072,7 @@ class TypingTutor extends JFrame implements ActionListener, DocumentListener
 	//main method
 		public static void main(String []args)
 		{	
-			TypingTutor obj = new TypingTutor();
+			SpeedTester obj = new SpeedTester();
 
 		}
 

@@ -7,7 +7,7 @@
 #	About:- SpeedTester is Typing tool which helps to you to 	#
 #			check and increase your typing speed and accuracy.	#
 #																#
-#################################################################
+###############################################################*/
 
 //importing modules
 import javax.swing.*;

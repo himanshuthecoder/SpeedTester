@@ -1,6 +1,6 @@
 /*###############################################################
 #		Program Name :- SpeedTester.java 						#
-#		Github:- himanshusharmacool								#
+#		Github:- himanshuthecoder								#
 #		Gmail:- himanshusharma2972								#
 #               												#
 #                  www.blaregroup.com							#
